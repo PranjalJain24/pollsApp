@@ -27,3 +27,31 @@ pip install -r requirements.txt
 ```
 python manage.py runserver
 ```
+* You can add new Questions and Choices using Admin portal or using below commands in cmd terminal:
+```
+python manage.py shell
+>>> from polls.models import Choice, Question  # Import the model classes we just wrote.
+
+# To display all the Questions in the system:
+>>> Question.objects.all()
+
+# Create a new Question.
+>>> from django.utils import timezone
+>>> q = Question(question_text="Is this my third Question?", pub_date=timezone.now())
+
+# Save the object into the database. You have to call save() explicitly.
+>>> q.save()
+
+#Set choices for question having id=3: 
+>>> q = Question.objects.get(pk=3)
+
+# Display any choices from the related object set -- none so far.
+>>> q.choice_set.all()
+<QuerySet []>
+
+# Create two choices.
+>>> q.choice_set.create(choice_text='Yes', votes=0)
+<Choice: Yes>
+>>> q.choice_set.create(choice_text='No', votes=0)
+<Choice: No>
+```
